@@ -2,7 +2,8 @@ import fs from 'fs';
 import path from 'path';
 import csv from 'csv-parser';
 import FilterTable from '../components/FilterTable';
-import { DataRow} from '../components/FilterTable'
+import ImageProcessingButton from '../components/ImageProcessingButton';
+import { DataRow } from '../components/FilterTable';
 
 async function getData(): Promise<DataRow[]> {
   const results: DataRow[] = [];
@@ -17,7 +18,7 @@ async function getData(): Promise<DataRow[]> {
             ID: data.ID,
             Nombre: data.Nombre,
             Email: data.Email,
-            FechaDeRegistro: data['Fecha de Registro'] 
+            FechaDeRegistro: data['Fecha de Registro'],
           });
         }
       })
@@ -29,16 +30,21 @@ async function getData(): Promise<DataRow[]> {
       });
   });
 }
+
 export default async function Dashboard() {
-    try {
-      const data = await getData();
-      return (
+  try {
+    const data = await getData();
+    return (
+      <div style={{ padding: '20px', fontFamily: 'Arial, sans-serif' }}>
+        <h1>Dashboard</h1>
+        <ImageProcessingButton />
         <div>
-          <h1>Datos del CSV</h1>
+          <h2>Datos del CSV</h2>
           <FilterTable data={data} />
         </div>
-      );
-    } catch (error) {
-      return <div>Error loading data</div>;
-    }
+      </div>
+    );
+  } catch (error) {
+    return <div>Error loading data</div>;
   }
+}
